@@ -1,0 +1,74 @@
+﻿[
+	{
+		"ID": 1,
+		"Website": "Supreme US",
+		"Size": "Large",
+		"Keywords": "+north+face+fleece",
+		"Proxy": ":",
+		"BillingProfile": "profile_1",
+		"Status": "Idle"
+	},
+	{
+		"ID": 2,
+		"Website": "Supreme US edited",
+		"Size": "Large",
+		"Keywords": "+north+face+fleece",
+		"Proxy": ":",
+		"BillingProfile": "profile_2",
+		"Status": "Idle"
+	},
+	{
+		"ID": 3,
+		"Website": "Supreme US",
+		"Size": "Large",
+		"Keywords": "+north+face+fleece",
+		"Proxy": ":",
+		"BillingProfile": "profile_10",
+		"Status": "Idle"
+	},
+	{
+		"ID": 4,
+		"Website": "Supreme US modified",
+		"Size": "Any",
+		"Keywords": "+boker+knife",
+		"Proxy": ":",
+		"BillingProfile": "profile_4",
+		"Status": "Idle"
+	},
+	{
+		"ID": 5,
+		"Website": "Supreme US",
+		"Size": "Any",
+		"Keywords": "+boker+knife",
+		"Proxy": ":",
+		"BillingProfile": "profile_5",
+		"Status": "Idle"
+	},
+	{
+		"ID": 6,
+		"Website": "Supreme US",
+		"Size": "N/A",
+		"Keywords": "+boker+knife",
+		"Proxy": ":",
+		"BillingProfile": "profile_6",
+		"Status": "Idle"
+	},
+	{
+		"ID": 7,
+		"Website": "Supreme US",
+		"Size": "N/A",
+		"Keywords": "+boker+knife",
+		"Proxy": ":",
+		"BillingProfile": "profile_7",
+		"Status": "Idle"
+	},
+	{
+		"ID": 8,
+		"Website": "Supreme US",
+		"Size": "Small",
+		"Keywords": "+nike",
+		"Proxy": ":",
+		"BillingProfile": "profile_8",
+		"Status": "Idle"
+	}
+]
