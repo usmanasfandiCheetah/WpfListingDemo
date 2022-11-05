@@ -19,12 +19,10 @@ namespace WpfListingDemo
     {
 		private ObservableCollection<TaskModel> _taskList;
         private TaskModel _currentTask;
-        private bool _isRunning;
-
-        public bool IsRunning { get => _isRunning; set => SetProperty(ref _isRunning, value); }
+        
         public TaskModel CurrentTask { get => _currentTask; set => SetProperty(ref _currentTask,value); }
         public ObservableCollection<TaskModel> TaskList { get => _taskList; set => SetProperty(ref _taskList,value); }
-        BackgroundWorker worker;
+        DataService _service;
         string DATA_FILE = Environment.CurrentDirectory + "\\data\\gridtask.dat";
 
         #region Commands
@@ -41,6 +39,10 @@ namespace WpfListingDemo
 		{
 			TaskList = new ObservableCollection<TaskModel>();
             CurrentTask = new TaskModel();
+            _service = new DataService(DATA_FILE);
+            _service.DataAdded += _service_DataAdded;
+            _service.DataUpdated += _service_DataUpdated;
+            _service.DataRemoved += _service_DataRemoved;
 
             StartCommand = new RelayCommand<object>(new Action<object?>(ExecStartCommand));
             StopCommand = new RelayCommand<object>(new Action<object?>(ExecStopCommand));
@@ -48,95 +50,51 @@ namespace WpfListingDemo
             CopyCommand = new RelayCommand<object>(new Action<object?>(ExecCopyCommand));
             DeleteCommand = new RelayCommand<object>(new Action<object?>(ExecDeleteCommand));
 
-            worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.DoWork += Worker_DoWork;
-
-            StartReading();
+            _service.Start();
         }
 
-        private void Worker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        private void _service_DataRemoved(object? sender, EventArgs e)
         {
-            // update ui
-            if (e.Result != null)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                var updatedList = (List<TaskModel>)e.Result;
-                updatedList.ForEach(item =>
-                {
-                    var obj = TaskList.Where(x => x.ID == item.ID).FirstOrDefault();
-                    if (obj != null)
-                    {
-                        obj.Website = item.Website;
-                        obj.Size = item.Size;
-                        obj.Keywords = item.Keywords;
-                        obj.Proxy = item.Proxy;
-                        obj.BillingProfile = item.BillingProfile;
-                    }
-                    else
-                    {
-                        TaskList.Add(item);
-                    }
-                });
-            }
+                if (sender == null)
+                    return;
 
-            if (IsRunning)
-                worker.RunWorkerAsync(DATA_FILE);
+                TaskModel item = (TaskModel)sender;
+                TaskList.Remove(item);
+            });
         }
 
-        private void Worker_DoWork(object? sender, DoWorkEventArgs e)
+        private void _service_DataUpdated(object? sender, EventArgs e)
         {
-            e.Result = ReadFile(e.Argument.ToString());
-        }
-
-        private List<TaskModel> ReadFile(string path)
-        {
-            //string json = File.ReadAllText(path);
-            string json = "";
-            using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                using (StreamReader reader = new StreamReader(stream))
+                if (sender == null)
+                    return;
+
+                TaskModel item = (TaskModel)sender;
+                var obj = TaskList.Where(x => x.ID == item.ID).FirstOrDefault();
+                if (obj != null)
                 {
-                    while (!reader.EndOfStream)
-                    {
-                        json = reader.ReadToEnd();
-                    }
+                    obj.Website = item.Website;
+                    obj.Size = item.Size;
+                    obj.Keywords = item.Keywords;
+                    obj.Proxy = item.Proxy;
+                    obj.BillingProfile = item.BillingProfile;
                 }
-            }
+            });
+        }
 
-            if (string.IsNullOrEmpty(json))
-                return null;
-
-            List<TaskModel>? list = JsonSerializer.Deserialize<List<TaskModel>>(json);
-            List<TaskModel> tasks = new List<TaskModel>();
-
-            if (list != null)
+        private void _service_DataAdded(object? sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                list.ForEach(item =>
-                {
-                    if (!TaskList.Contains(item))
-                        tasks.Add(item);
-                    else
-                    {
-                        var obj = TaskList.Where(x => x.ID == item.ID).FirstOrDefault();
-                        if (obj != null)
-                        {
-                            // update existing
-                            if (obj.Website.ToLower() != item.Website.ToLower()) { tasks.Add(item); }
-                            if (obj.Size.ToLower() != item.Size.ToLower()) { if (!tasks.Contains(item)) { tasks.Add(item); } }
-                            if (obj.Keywords.ToLower() != item.Keywords.ToLower()) { if (!tasks.Contains(item)) { tasks.Add(item); } }
-                            if (obj.Proxy.ToLower() != item.Proxy.ToLower()) { if (!tasks.Contains(item)) { tasks.Add(item); } }
-                            if (obj.BillingProfile.ToLower() != item.BillingProfile.ToLower()) { if (!tasks.Contains(item)) { tasks.Add(item); } }
+                if (sender == null)
+                    return;
 
-                        }
-                        else
-                        {
-                            tasks.Add(item);
-                        }
-                    }
-                });
-            }
-
-            return tasks;
+                TaskModel item = (TaskModel)sender;
+                TaskList.Add(item);
+            });
         }
 
         private void ExecStartCommand(object? obj)
@@ -183,19 +141,5 @@ namespace WpfListingDemo
                 MessageBox.Show("Selected Task ID : " + CurrentTask.ID);
             }
         }
-
-       
-
-        private void StartReading()
-        {
-            IsRunning = true;
-            worker.RunWorkerAsync(DATA_FILE);            
-        }
-
-        private void StopReading()
-        {
-            IsRunning = false;
-        }
-
     }
 }

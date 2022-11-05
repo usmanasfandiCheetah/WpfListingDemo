@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "9lRUkf5xegX42r72AGJktggkiC0IYwOmQWm5zM1FP1rWZEFge4mZCuAuoWZ+wE680bAGQm90JJzL6MkpA8r09g==",
+  "success": true,
+  "projectFilePath": "E:\\Projects\\2022\\John DeBritto\\WpfListingDemo\\WpfListingDemo\\WpfListingDemo.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\usman\\.nuget\\packages\\communitytoolkit.mvvm\\8.0.0\\communitytoolkit.mvvm.8.0.0.nupkg.sha512",
+    "C:\\Users\\usman\\.nuget\\packages\\materialdesigncolors\\2.0.9\\materialdesigncolors.2.0.9.nupkg.sha512",
+    "C:\\Users\\usman\\.nuget\\packages\\materialdesignthemes\\4.6.1\\materialdesignthemes.4.6.1.nupkg.sha512",
+    "C:\\Users\\usman\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.1\\microsoft.extensions.logging.abstractions.6.0.1.nupkg.sha512",
+    "C:\\Users\\usman\\.nuget\\packages\\mvvmcross\\9.0.1\\mvvmcross.9.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

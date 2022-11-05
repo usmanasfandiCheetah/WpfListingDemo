@@ -18,19 +18,10 @@
 		"Status": "Idle"
 	},
 	{
-		"ID": 3,
-		"Website": "Supreme US",
-		"Size": "Large",
-		"Keywords": "+north+face+fleece",
-		"Proxy": ":",
-		"BillingProfile": "profile_3",
-		"Status": "Idle"
-	},
-	{
 		"ID": 4,
 		"Website": "Supreme US",
 		"Size": "Any",
-		"Keywords": "+boker+knife",
+		"Keywords": "+boker",
 		"Proxy": ":",
 		"BillingProfile": "profile_4",
 		"Status": "Idle"
