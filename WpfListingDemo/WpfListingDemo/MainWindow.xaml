@@ -10,9 +10,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
-        <StackPanel Margin="40">
+        <Grid Margin="40">
 
-            <Grid Margin="0,0,20,0">
+            <Grid Margin="0,0,20,0" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="0.5*" />
@@ -33,7 +33,7 @@
                 
             </Grid>
 
-            <ScrollViewer>
+            <ScrollViewer Margin="0,30,0,0">
                 <ItemsControl Name="listItems" ItemsSource="{Binding TaskList}" Margin="0,0,10,0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -87,7 +87,7 @@
             </ScrollViewer>
             
             
-        </StackPanel>
+        </Grid>
         
     </Grid>
 </Window>
